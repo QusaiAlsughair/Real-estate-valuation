@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+Real_state_valuation=pd.read_csv('/content/Real-estate-valuation-data-set-_1_-_1_.csv')
+Real_state_valuation.head()
+sns.pairplot(Real_state_valuation)
+sns.displot(Real_state_valuation['Y house price of unit area'])
+sns.scatterplot(x='X2 house age',y='Y house price of unit area',data=Real_state_valuation)
+sns.scatterplot(x='X3 distance to the nearest MRT station',y='Y house price of unit area',data=Real_state_valuation)
+sns.scatterplot(x='X5 latitude',y='Y house price of unit area',data=Real_state_valuation,hue='X6 longitude')
+sns.scatterplot(x='X3 distance to the nearest MRT station',y='Y house price of unit area',data=Real_state_valuation,hue='X4 number of convenience stores')
+X = Real_state_valuation.drop('Y house price of unit area',axis=1)
+y = Real_state_valuation['Y house price of unit area']
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2,random_state = 1)
+from sklearn.linear_model import LinearRegression
+lin_reg = LinearRegression()
+lin_reg.fit (X_train, y_train)
+y_pred = lin_reg.predict(X_test)
+lin_reg.score(X_test,y_test)
